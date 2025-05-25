@@ -1,0 +1,786 @@
+<html lang="pt-BR"><head>
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <link rel="preconnect" href="https://fonts.googleapis.com">
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+              <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+              <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+              <style>
+                html, body {
+                  scroll-behavior: auto !important;
+                  margin: 0;
+                  padding: 0;
+                  width: 100%;
+                  height: 100%;
+                  font-family: 'Inter', sans-serif;
+                }
+                * {
+                  transition: outline 0.2s;
+                }
+                .editor-selected {
+                  outline: 2px solid #3b82f6 !important;
+                }
+                
+                /* Performance optimization: reduce paint operations */
+                .editor-selectable {
+                  will-change: outline;
+                  cursor: pointer;
+                }
+
+                /* Make sure hover state is visible */
+                .editor-selectable:hover {
+                  outline: 2px dashed rgba(59, 130, 246, 0.5) !important;
+                }
+              </style>
+            <style>
+    html, body {
+      scroll-behavior: auto !important;
+      overflow-anchor: none !important;
+      overscroll-behavior: none; /* Prevent pull-to-refresh */
+    }
+    
+    /* Preservar a aparência visual original dos links */
+    a {
+      text-decoration: underline;
+      color: inherit;
+      cursor: pointer;
+    }
+    
+    /* Optimization for smoother interactions */
+    [data-editor-id] {
+      will-change: outline;
+      cursor: pointer;
+    }
+
+    /* Make sure all selectable elements have hover effect */
+    .editor-selectable:hover {
+      outline: 2px solid rgba(59, 130, 246, 0.5) !important;
+    }
+  </style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:Inter, sans-serif;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}.fixed{position:fixed}.sticky{position:sticky}.bottom-6{bottom:1.5rem}.right-6{right:1.5rem}.top-0{top:0px}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-10{margin-bottom:2.5rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.ml-2{margin-left:0.5rem}.mr-2{margin-right:0.5rem}.mr-3{margin-right:0.75rem}.mr-4{margin-right:1rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.mt-8{margin-top:2rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-1{height:0.25rem}.h-12{height:3rem}.h-48{height:12rem}.h-auto{height:auto}.w-20{width:5rem}.w-auto{width:auto}.w-full{width:100%}.max-w-3xl{max-width:48rem}.max-w-full{max-width:100%}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-8 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2rem * var(--tw-space-x-reverse));margin-left:calc(2rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.border{border-width:1px}.border-t{border-top-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-gray-700{--tw-border-opacity:1;border-color:rgb(55 65 81 / var(--tw-border-opacity, 1))}.border-mediza-blue{--tw-border-opacity:1;border-color:rgb(21 101 192 / var(--tw-border-opacity, 1))}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94 / var(--tw-bg-opacity, 1))}.bg-mediza-blue{--tw-bg-opacity:1;background-color:rgb(21 101 192 / var(--tw-bg-opacity, 1))}.bg-mediza-gray{--tw-bg-opacity:1;background-color:rgb(66 66 66 / var(--tw-bg-opacity, 1))}.bg-mediza-green{--tw-bg-opacity:1;background-color:rgb(46 125 50 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.object-cover{object-fit:cover}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-12{padding-top:3rem;padding-bottom:3rem}.py-16{padding-top:4rem;padding-bottom:4rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pl-10{padding-left:2.5rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.font-sans{font-family:Inter, sans-serif}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.italic{font-style:italic}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-mediza-blue{--tw-text-opacity:1;color:rgb(21 101 192 / var(--tw-text-opacity, 1))}.text-mediza-gray{--tw-text-opacity:1;color:rgb(66 66 66 / var(--tw-text-opacity, 1))}.text-mediza-green{--tw-text-opacity:1;color:rgb(46 125 50 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-400{--tw-text-opacity:1;color:rgb(250 204 21 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-100:hover{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.hover\:bg-green-600:hover{--tw-bg-opacity:1;background-color:rgb(22 163 74 / var(--tw-bg-opacity, 1))}.hover\:text-blue-800:hover{--tw-text-opacity:1;color:rgb(30 64 175 / var(--tw-text-opacity, 1))}.hover\:text-mediza-blue:hover{--tw-text-opacity:1;color:rgb(21 101 192 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:shadow-lg:hover{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}@media (min-width: 640px){.sm\:inline{display:inline}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.sm\:space-y-0 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px * var(--tw-space-y-reverse))}}@media (min-width: 768px){.md\:mb-0{margin-bottom:0px}.md\:flex{display:flex}.md\:hidden{display:none}.md\:w-1\/2{width:50%}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:py-24{padding-top:6rem;padding-bottom:6rem}.md\:pr-10{padding-right:2.5rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}.md\:text-5xl{font-size:3rem;line-height:1}}@media (min-width: 1024px){.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}</style></head>
+            <body style="height: 100%; min-height: 100vh;" class="font-sans antialiased text-gray-800 bg-gray-50">
+              
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mediza - Equipamentos Agroindustriais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'mediza-green': '#2E7D32',
+                        'mediza-blue': '#1565C0',
+                        'mediza-gray': '#424242',
+                        'mediza-light': '#f5f7fa',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        html, body {
+            scroll-behavior: smooth;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100vh;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4f0e8 100%);
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .cta-gradient {
+            background: linear-gradient(135deg, #1565C0 0%, #1976D2 100%);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #1565C0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+        
+        .product-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .whatsapp-button {
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .contact-input:focus {
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 2px rgba(21, 101, 192, 0.5);
+        }
+    </style>
+
+
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://i.postimg.cc/637hNW1w/mediza.png" alt="Mediza Logo" class="h-12 w-auto mr-3">
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#produtos" class="nav-link text-gray-700 hover:text-mediza-blue">Produtos</a>
+                <a href="#beneficios" class="nav-link text-gray-700 hover:text-mediza-blue">Benefícios</a>
+                <a href="#sobre" class="nav-link text-gray-700 hover:text-mediza-blue">Sobre Nós</a>
+                <a href="#depoimentos" class="nav-link text-gray-700 hover:text-mediza-blue">Depoimentos</a>
+                <a href="#contato" class="nav-link text-gray-700 hover:text-mediza-blue">Contato</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu bg-white md:hidden shadow-md">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#produtos" class="block py-2 text-gray-700 hover:text-mediza-blue transition duration-300">Produtos</a>
+                <a href="#beneficios" class="block py-2 text-gray-700 hover:text-mediza-blue transition duration-300">Benefícios</a>
+                <a href="#sobre" class="block py-2 text-gray-700 hover:text-mediza-blue transition duration-300">Sobre Nós</a>
+                <a href="#depoimentos" class="block py-2 text-gray-700 hover:text-mediza-blue transition duration-300">Depoimentos</a>
+                <a href="#contato" class="block py-2 text-gray-700 hover:text-mediza-blue transition duration-300">Contato</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-16 md:py-24">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold text-mediza-gray mb-4">Soluções inteligentes ao seu alcance!</h1>
+                <p class="text-xl text-gray-600 mb-8">Aumente sua produtividade com tecnologia de ponta para medição de umidade e impurezas em grãos.</p>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <a href="#contato" class="bg-mediza-blue hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg text-center transition duration-300 shadow-md hover:shadow-lg">
+                        Solicitar Demonstração
+                    </a>
+                    <a href="#produtos" class="bg-white hover:bg-gray-100 text-mediza-blue font-bold py-3 px-6 rounded-lg border border-mediza-blue text-center transition duration-300 shadow-md hover:shadow-lg">
+                        Conheça Nossos Produtos
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=1471&amp;q=80" alt="Equipamentos Mediza" class="rounded-lg shadow-xl max-w-full h-auto">
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Mediza -->
+    <section id="beneficios" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-mediza-gray mb-4">Por Que Escolher Mediza?</h2>
+                <div class="w-20 h-1 bg-mediza-green mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card bg-white p-8 rounded-lg border border-gray-100">
+                    <div class="text-mediza-green mb-4 flex justify-center">
+                        <i class="fas fa-bullseye text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 text-center">Precisão</h3>
+                    <p class="text-gray-600 text-center">Nossos medidores de umidade e impurezas foram projetados para fornecer medições exatas, essenciais para decisões assertivas no campo e na indústria.</p>
+                </div>
+                
+                <div class="feature-card bg-white p-8 rounded-lg border border-gray-100">
+                    <div class="text-mediza-green mb-4 flex justify-center">
+                        <i class="fas fa-clock text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 text-center">Eficiência</h3>
+                    <p class="text-gray-600 text-center">Com nossas máquinas de impureza e secadores de amostras, você otimiza processos, economizando tempo e recursos valiosos no beneficiamento de grãos.</p>
+                </div>
+                
+                <div class="feature-card bg-white p-8 rounded-lg border border-gray-100">
+                    <div class="text-mediza-green mb-4 flex justify-center">
+                        <i class="fas fa-shield-alt text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 text-center">Confiabilidade</h3>
+                    <p class="text-gray-600 text-center">Produtos duráveis que contam com assistência técnica especializada e tecnologia nacional, assegurando um desempenho consistente e seguro ao longo do tempo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="produtos" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-mediza-gray mb-4">Nossos Produtos</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Ao optar pelos equipamentos Mediza, você não apenas investe em tecnologia. Você adquire uma solução robusta que se adapta às suas necessidades específicas.</p>
+                <div class="w-20 h-1 bg-mediza-green mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
+                    <img src="https://mediza.com.br/wp-content/uploads/medidor-de-umidade-mu-25-medidor-de-umidade-portatil-mu-25.jpg" alt="Medidor de Umidade" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-mediza-gray mb-2">Medidores de Umidade</h3>
+                        <p class="text-gray-600 mb-4">Tecnologia precisa para medição de umidade em diversos tipos de grãos.</p>
+                        <a href="#contato" class="text-mediza-blue font-semibold hover:text-blue-800 transition duration-300 flex items-center">
+                            Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
+                    <img src="https://i.postimg.cc/wMrMYzZK/selecionador-de-impurezas-semi-automatico-mda-1500-jpg.webp" alt="Máquina de Impureza" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-mediza-gray mb-2">Máquinas de Impureza</h3>
+                        <p class="text-gray-600 mb-4">Identificação e separação eficiente de impurezas nos seus grãos.</p>
+                        <a href="#contato" class="text-mediza-blue font-semibold hover:text-blue-800 transition duration-300 flex items-center">
+                            Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
+                    <img src="https://i.postimg.cc/fLLMzFxM/secador-de-amostras-12-gavetas-jpg.webp" alt="Secador de Amostras" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-mediza-gray mb-2">Secadores de Amostras</h3>
+                        <p class="text-gray-600 mb-4">Processo rápido e eficiente para secagem de amostras de grãos.</p>
+                        <a href="#contato" class="text-mediza-blue font-semibold hover:text-blue-800 transition duration-300 flex items-center">
+                            Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
+                    <img src="https://i.postimg.cc/mD2gchGf/aspirador-industrial-me-5000-sugador-de-graos.jpg" alt="Aspirador Industrial" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-mediza-gray mb-2">Aspiradores Industriais</h3>
+                        <p class="text-gray-600 mb-4">Limpeza eficiente de grãos e ambientes de trabalho.</p>
+                        <a href="#contato" class="text-mediza-blue font-semibold hover:text-blue-800 transition duration-300 flex items-center">
+                            Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
+                    <img src="https://i.postimg.cc/DwrvB1v3/calador-graneleiro-aco-inox-jpg.webp" alt="Calador Graneleiro" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-mediza-gray mb-2">Caladores Graneleiros</h3>
+                        <p class="text-gray-600 mb-4">Coleta de amostras precisa e representativa.</p>
+                        <a href="#contato" class="text-mediza-blue font-semibold hover:text-blue-800 transition duration-300 flex items-center">
+                            Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
+                    <img src="https://i.postimg.cc/YS8pwkLX/Balanca-Digital-100-Kg-MOD2124-T-jpg.webp" alt="Balanças e Classificadores" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-mediza-gray mb-2">Balanças e Classificadores</h3>
+                        <p class="text-gray-600 mb-4">Soluções completas para pesagem e classificação de grãos.</p>
+                        <a href="#contato" class="text-mediza-blue font-semibold hover:text-blue-800 transition duration-300 flex items-center">
+                            Saiba mais <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10">
+                    <img src="https://i.postimg.cc/SNWRtBdP/Chat-GPT-Image-23-de-mai-de-2025-23-57-05.png" alt="Sobre a Mediza" class="rounded-lg shadow-lg w-full">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold text-mediza-gray mb-6">25 Anos de Excelência no Agronegócio</h2>
+                    <p class="text-gray-600 mb-4">Com mais de duas décadas de experiência, a Mediza se consolidou como referência em equipamentos para medição de umidade e impurezas em grãos.</p>
+                    <p class="text-gray-600 mb-6">Nossa trajetória é marcada pela inovação constante e compromisso com a qualidade, atendendo desde pequenos produtores até grandes indústrias em todo o Brasil e América do Sul.</p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-globe-americas text-mediza-blue"></i>
+                            </div>
+                            <span class="font-semibold">Exportação para América do Sul</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-medal text-mediza-blue"></i>
+                            </div>
+                            <span class="font-semibold">Qualidade Garantida</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-tools text-mediza-blue"></i>
+                            </div>
+                            <span class="font-semibold">Assistência Técnica</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-3 rounded-full mr-3">
+                                <i class="fas fa-users text-mediza-blue"></i>
+                            </div>
+                            <span class="font-semibold">Clientes Satisfeitos</span>
+                        </div>
+                    </div>
+                    
+                    <a href="#contato" class="inline-block bg-mediza-blue hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-md hover:shadow-lg">
+                        Fale Conosco
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="depoimentos" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-mediza-gray mb-4">O Que Nossos Clientes Dizem</h2>
+                <div class="w-20 h-1 bg-mediza-green mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="testimonial-card p-8 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-user text-mediza-blue text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-mediza-gray">João Silva</h4>
+                            <p class="text-gray-600">Agricultor</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 italic mb-4">"Os equipamentos da Mediza transformaram a maneira como trabalhamos. A precisão e eficiência nos processos aumentaram nossa produtividade em 30%!"</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card p-8 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-user text-mediza-blue text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-mediza-gray">Maria Oliveira</h4>
+                            <p class="text-gray-600">Gestora de Cooperativa</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 italic mb-4">"Com a Mediza, temos a confiança de que nossos grãos estão sendo analisados com a melhor tecnologia do mercado. O suporte técnico é excelente!"</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overcoming Objections -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-mediza-gray mb-4">Superando Suas Objeções</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Respondemos às dúvidas mais comuns de nossos clientes</p>
+                <div class="w-20 h-1 bg-mediza-green mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-dollar-sign text-mediza-green mr-3"></i> O preço é alto?
+                    </h3>
+                    <p class="text-gray-600">O investimento em tecnologia Mediza se paga rapidamente com a economia em tempo e recursos. Nossos equipamentos oferecem retorno garantido.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-shield-alt text-mediza-green mr-3"></i> Esses equipamentos são duráveis?
+                    </h3>
+                    <p class="text-gray-600">Nossos produtos são projetados para resistir a ambientes intensos, assegurando longa vida útil mesmo em condições de trabalho exigentes.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-tools text-mediza-green mr-3"></i> E a manutenção?
+                    </h3>
+                    <p class="text-gray-600">Oferecemos assistência técnica especializada para garantir que você tenha suporte sempre que precisar, com peças de reposição disponíveis.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-user-check text-mediza-green mr-3"></i> É fácil de usar?
+                    </h3>
+                    <p class="text-gray-600">Nossos equipamentos são desenvolvidos para serem intuitivos, com manuais claros e suporte técnico disponível para treinamento quando necessário.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-check-circle text-mediza-green mr-3"></i> As medições são confiáveis?
+                    </h3>
+                    <p class="text-gray-600">Com tecnologia de ponta, garantimos precisão em cada medição, com calibração periódica disponível através de nossa equipe técnica.</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-seedling text-mediza-green mr-3"></i> Funciona com diferentes grãos?
+                    </h3>
+                    <p class="text-gray-600">Nossos produtos são versáteis e compatíveis com uma ampla variedade de grãos, incluindo soja, milho, trigo, arroz e muitos outros.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-gradient py-16 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">A Hora de Agir é Agora!</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Não deixe para depois! Invista na qualidade e eficiência que sua operação merece.</p>
+            <a href="#contato" class="inline-block bg-white hover:bg-gray-100 text-mediza-blue font-bold py-4 px-8 rounded-lg text-lg transition duration-300 shadow-md hover:shadow-lg">
+                Solicite uma Demonstração
+            </a>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-mediza-gray mb-4">Perguntas Frequentes</h2>
+                <div class="w-20 h-1 bg-mediza-green mx-auto"></div>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-question-circle text-mediza-blue mr-3"></i> Qual é a garantia dos produtos?
+                    </h3>
+                    <p class="text-gray-600 pl-10">Todos os produtos Mediza possuem garantia de fábrica, além de assistência técnica especializada. O período de garantia varia conforme o produto e pode ser consultado com nosso time comercial.</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-tractor text-mediza-blue mr-3"></i> Os produtos são adequados para pequenas propriedades?
+                    </h3>
+                    <p class="text-gray-600 pl-10">Sim! Temos soluções para todos os tipos de operações, desde pequenas propriedades até grandes indústrias. Nossos consultores podem indicar o equipamento ideal para o tamanho da sua operação.</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-file-invoice-dollar text-mediza-blue mr-3"></i> Como posso solicitar um orçamento?
+                    </h3>
+                    <p class="text-gray-600 pl-10">Basta preencher nosso formulário de contato e um de nossos especialistas entrará em contato imediatamente. Você também pode nos chamar diretamente pelo WhatsApp ou telefone.</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-shipping-fast text-mediza-blue mr-3"></i> Qual é o prazo de entrega?
+                    </h3>
+                    <p class="text-gray-600 pl-10">Trabalhamos com prazos rápidos para que você não perca tempo. O prazo exato depende do produto e local de entrega, mas normalmente varia entre 5 a 15 dias úteis para grande parte do Brasil.</p>
+                </div>
+                
+                <div class="mb-6">
+                    <h3 class="text-xl font-bold text-mediza-gray mb-3 flex items-center">
+                        <i class="fas fa-graduation-cap text-mediza-blue mr-3"></i> Oferecem treinamento para uso dos equipamentos?
+                    </h3>
+                    <p class="text-gray-600 pl-10">Sim, todos nossos equipamentos incluem manual de instruções detalhado e oferecemos treinamento presencial ou remoto conforme necessidade do cliente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <h2 class="text-3xl font-bold text-mediza-gray mb-6">Entre em Contato</h2>
+                    <p class="text-gray-600 mb-8">Preencha o formulário ao lado e nossa equipe entrará em contato o mais breve possível para tirar suas dúvidas ou fornecer um orçamento personalizado.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-mediza-blue"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-mediza-gray">Endereço</h4>
+                                <p class="text-gray-600">Rua Orlando Hass, 155 – Distrito Industrial<br>Panambi – RS</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-phone-alt text-mediza-blue"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-mediza-gray">Telefone</h4>
+                                <p class="text-gray-600">(55) 3375-3750</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope text-mediza-blue"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-mediza-gray">Email</h4>
+                                <p class="text-gray-600">contato@mediza.com.br</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fab fa-whatsapp text-mediza-blue"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-mediza-gray">WhatsApp Vendas RS/SC</h4>
+                                <p class="text-gray-600">(55) 99146-3747</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                <i class="fab fa-whatsapp text-mediza-blue"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-mediza-gray">WhatsApp Demais Estados</h4>
+                                <p class="text-gray-600">(55) 98126-5773</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form id="contact-form" class="bg-gray-50 p-8 rounded-lg shadow-sm">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 font-medium mb-2">Nome Completo</label>
+                            <input type="text" id="name" class="contact-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" required="">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                            <input type="email" id="email" class="contact-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" required="">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="phone" class="block text-gray-700 font-medium mb-2">Telefone</label>
+                            <input type="tel" id="phone" class="contact-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" required="">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="product" class="block text-gray-700 font-medium mb-2">Produto de Interesse</label>
+                            <select id="product" class="contact-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none">
+                                <option value="">Selecione um produto</option>
+                                <option value="medidor">Medidor de Umidade</option>
+                                <option value="maquina">Máquina de Impureza</option>
+                                <option value="secador">Secador de Amostras</option>
+                                <option value="aspirador">Aspirador Industrial</option>
+                                <option value="calador">Calador Graneleiro</option>
+                                <option value="balanca">Balanças e Classificadores</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-700 font-medium mb-2">Mensagem</label>
+                            <textarea id="message" rows="4" class="contact-input w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none" required=""></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-mediza-blue hover:bg-blue-800 text-white font-bold py-3 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg">
+                            Enviar Mensagem
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-mediza-gray text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <img src="https://i.postimg.cc/637hNW1w/mediza.png" alt="Mediza Logo" class="h-12 w-auto mb-4">
+                    <p class="text-gray-400">Soluções inteligentes para o agronegócio brasileiro.</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="https://www.facebook.com/medizaequipamentos" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/medizaequipamentos" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/medizaequipamentosagroindustriais" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Produtos</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Medidores de Umidade</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Máquinas de Impureza</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Secadores de Amostras</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Aspiradores Industriais</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Links Úteis</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#sobre" class="text-gray-400 hover:text-white transition duration-300">Sobre Nós</a></li>
+                        <li><a href="#produtos" class="text-gray-400 hover:text-white transition duration-300">Produtos</a></li>
+                        <li><a href="#contato" class="text-gray-400 hover:text-white transition duration-300">Contato</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Política de Privacidade</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-lg mb-4">Contato</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
+                            <span class="text-gray-400">Rua Orlando Hass, 155 - Distrito Industrial, Panambi - RS</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-gray-400 mr-2"></i>
+                            <span class="text-gray-400">(55) 3375-3750</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-gray-400 mr-2"></i>
+                            <span class="text-gray-400">contato@mediza.com.br</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-whatsapp text-gray-400 mr-2"></i>
+                            <span class="text-gray-400">(55) 99146-3747 (RS/SC)</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fab fa-whatsapp text-gray-400 mr-2"></i>
+                            <span class="text-gray-400">(55) 98126-5773 (Demais estados)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2023 Mediza Equipamentos Agroindustriais. Todos os direitos reservados.</p>
+                <p class="mt-2">Visite nosso site: <a href="https://mediza.com.br" class="text-white hover:underline">mediza.com.br</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Buttons -->
+    <div class="fixed bottom-6 right-6 flex flex-col space-y-3">
+        <a href="https://wa.me/5555991463747" class="whatsapp-button bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition duration-300 flex items-center justify-center">
+            <i class="fab fa-whatsapp text-2xl"></i>
+            <span class="ml-2 text-sm hidden sm:inline">RS/SC</span>
+        </a>
+        <a href="https://wa.me/5555981265773" class="whatsapp-button bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition duration-300 flex items-center justify-center">
+            <i class="fab fa-whatsapp text-2xl"></i>
+            <span class="ml-2 text-sm hidden sm:inline">Demais estados</span>
+        </a>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                mobileMenu.classList.remove('open');
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Form submission
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const product = document.getElementById('product').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to a server
+            // For this example, we'll just show an alert
+            alert(`Obrigado, ${name}! Sua mensagem foi enviada com sucesso. Entraremos em contato em breve.`);
+            
+            // Reset form
+            contactForm.reset();
+        });
+    </script>
+
+
+            
+          
+        </body></html>
